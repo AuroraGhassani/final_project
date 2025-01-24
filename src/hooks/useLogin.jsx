@@ -26,38 +26,38 @@ export const useLoginUser = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+    
         setLoading(true);
         setSuccess("");
-        setError(""); // Reset error dan success sebelum submit form
-
-        // Validasi input form
+        setError(""); // Reset error and success before submitting the form
+    
+        // Validate input fields
         if (!form.email || !form.password) {
             setError("Please fill all fields!");
             setLoading(false);
             return;
         }
-
+    
         try {
-            // Panggil API login
-            const response = await loginUser(form); 
-            // console.log("apakah ini token?", response); 
+            // Call the login API
+            const response = await loginUser(form);
             localStorage.setItem("jwtToken", response);
-
+    
             setSuccess("Login Successful!");
-
-            // Redirect ke halaman homepage setelah login sukses
             setTimeout(() => {
                 navigate("/homepage");
             }, 3000);
+    
         } catch (err) {
-            // Menangani error dengan baik dan menampilkan pesan error yang lebih jelas
-            const errorMessage = err?.response?.data || "Login failed! Please try again."; // Periksa error response dengan aman
-            setError(errorMessage); // Pastikan error di-set dengan benar
-            console.error("Login failed:", errorMessage); // Debugging: lihat error yang terjadi
+            // Extract the error message from the response
+            const errorMessage = err.response?.data?.message || "Login failed, please try again!";
+            setError(errorMessage); // Set the error message correctly
+            console.error("Login failed:", errorMessage); // Debugging: check the error
         } finally {
-            setLoading(false); // Pastikan loading selesai
+            setLoading(false); // Ensure loading is finished
         }
     };
+    
 
     return {
         form,

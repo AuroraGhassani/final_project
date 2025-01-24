@@ -1,19 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { VscChevronLeft } from "react-icons/vsc";
 
-const BackButton = ({ className = '' }) => {
+const BackButton = ({ className = ""}) => {
     const navigate = useNavigate();
-
-    const handleBack = () => {
-        navigate(-1); // Navigasi kembali ke halaman sebelumnya
-    };
 
     return (
         <button
-            onClick={handleBack}
-            className={`bg-blue-500 text-white px-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 text-xs h-6`}
+            onClick={() => navigate(-1)}
+            className={`flex items-center text-xl font-medium text-gray-600 rounded-lg hover:bg-gray-200 focus:ring-2 focus:ring-gray-300 focus:outline-none ${className}`}
         >
-            Back
+            <VscChevronLeft className="mr-2 text-gray-500" />
         </button>
     );
 };

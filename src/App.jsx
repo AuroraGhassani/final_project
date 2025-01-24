@@ -10,6 +10,10 @@ import EditProfilePage from "./page/EditProfilePage";
 import CreatePostPage from "./page/CreatePostPage";
 import DetailPostPage from "./page/DetailPostPage";
 import EditPostPage from "./page/EditPostPage";
+import CreateStoryPage from "./page/CreateStoryPage";
+import DetailStoryPage from "./page/DetailStoryPage";
+import OtherProfilePage from "./page/OtherProfilePage";
+import ExplorePage from "./page/ExplorePage";
 
 function App () {
     return (
@@ -23,7 +27,11 @@ function App () {
             <Route path="/editprofile" element={<EditProfilePage />} />
             <Route path="/createpost" element={<CreatePostPage />} />
             <Route path="/post/:id" element={<DetailPostPage />} />
-            <Route path="/edit-post/:id" element={<EditPostPage />} />
+            <Route path="/editPost/:id" element={<EditPostPage />} />
+            <Route path="/createstory" element={<CreateStoryPage />} />
+            <Route path="/story/:id" element={<DetailStoryPage />} />
+            <Route path="/profilepage/:id" element={<OtherProfilePage />} />
+            <Route path="/explore" element={<ExplorePage />} />
 
             {/* 
             

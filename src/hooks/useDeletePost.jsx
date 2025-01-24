@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { deletePost } from '../api/post'; // Sesuaikan path ini dengan struktur proyek Anda
+import { deletePost } from '../api/post'; 
 
 const useDeletePost = () => {
     const [isDeleting, setIsDeleting] = useState(false);

@@ -29,7 +29,7 @@ export const loginUser = async (loginData) => {
 
         console.log(response.data)
         const { token } = response.data.token; // Ambil JWT token dari respons
-        // localStorage.setItem(`${jwtToken}`, token);
+        localStorage.setItem(`${jwtToken}`, token);
         return response.data.token; // Mengembalikan data pengguna yang berhasil login
     } catch (error) {
         console.error('Error during login:', error.response?.data || error.message);

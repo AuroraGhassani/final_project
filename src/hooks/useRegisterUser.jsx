@@ -25,7 +25,7 @@ export const useRegisterUser = () => {
     const { id, value } = e.target;
     setForm({
       ...form,
-      [id]: value, // Menjaga nama field tetap konsisten
+      [id]: value, 
     });
   };
 
@@ -57,7 +57,6 @@ export const useRegisterUser = () => {
     }
 
     try {
-      // Call API untuk register
       const response = await registerUser(form);
       console.log(response); // Debugging: lihat hasil respons
 

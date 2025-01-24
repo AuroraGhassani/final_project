@@ -1,11 +1,9 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { baseUrl, jwtToken, apiKey } from '../api/api';
-import { getUserPosts } from '../api/post';
-import { userID } from '../api/api';
+import { useParams } from 'react-router-dom'; // Menggunakan useParams untuk mendapatkan id dari URL
+import { getPostByUserId } from '../api/post'; // Mengimpor fungsi getPostByUserId
 
-const usePosts = (userID) => {
-  
+const usePosts = () => {
+  const { id } = useParams(); // Mengambil 'id' dari URL
   const [postCount, setPostCount] = useState(0);
   const [posts, setPosts] = useState([]); // Menyimpan data postingan
   const [loading, setLoading] = useState(true);
@@ -13,12 +11,15 @@ const usePosts = (userID) => {
 
   useEffect(() => {
     const fetchPosts = async () => {
+
+      if (!id) return; 
       setLoading(true);
+
       try {
-        const response = await getUserPosts(userID);
-        console.log("API Response:", response); //data berupa array
-        setPosts(response); // Set posts dengan data API
-        setPostCount(response.length); // Hitung jumlah posting
+        const response = await getPostByUserId(id); 
+        setPosts(response.data.posts);
+        setPostCount(response.data.posts.length); 
+
       } catch (err) {
         console.error("Error fetching posts:", err.message || err.response?.data);
         setError(err.message || "Failed to fetch posts.");
@@ -26,10 +27,10 @@ const usePosts = (userID) => {
         setLoading(false);
       }
     };
-  
-    if (userID) fetchPosts();
-  }, [userID]);
-  
+
+    fetchPosts(); // Memanggil fungsi untuk mengambil data postingan
+
+  }, [id]); // Menggunakan 'id' sebagai dependency agar refetch jika 'id' berubah
 
   return { posts, postCount, loading, error };
 };

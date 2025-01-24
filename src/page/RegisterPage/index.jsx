@@ -1,4 +1,4 @@
-import { useRegisterUser } from "../../hooks/useRegister";
+import { useRegisterUser } from "../../hooks/useRegisterUser";
 import BackButton from "../../components/BackButton";
 
 const RegisterPage = () => {

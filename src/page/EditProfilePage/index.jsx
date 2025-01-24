@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import UploadImage from '../../components/UploadImage';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { baseUrl } from '../../api/api';
-import { apiKey, jwtToken } from '../../api/api';
 import BackButton from '../../components/BackButton';
+import useUploadImage from '../../hooks/useUploadImage';  // Import the updated hook
+import useUpdateProfile from '../../hooks/useUpdateProfile';
 
 const EditProfilePage = () => {
-    
     const [form, setForm] = useState({
         name: '',
         username: '',
@@ -20,10 +17,8 @@ const EditProfilePage = () => {
         website: '',
     });
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const { uploadImage, data: imageUrl, loading: uploading, error: uploadError } = useUploadImage(); // Get the hook's data
+    const { updateProfile, loading: updating, error, success } = useUpdateProfile();
 
     const navigate = useNavigate();
 
@@ -34,37 +29,44 @@ const EditProfilePage = () => {
         });
     };
 
+    const handleImageChange = (e) => {
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            uploadImage(selectedFile);  // Trigger the image upload
+        }
+    };
+
     const handleUpdate = async (e) => {
         e.preventDefault();
-        setLoading(true);
-        setSuccess("");
-        setError("");
 
-        const config = {
-            headers: {
-                apiKey: `${apiKey}`,
-                Authorization: `Bearer ${jwtToken}`,
-            },
-        };
+        // Ensure to use the uploaded image URL if available
+        const updatedForm = { ...form, profilePictureUrl: imageUrl || form.profilePictureUrl };
 
-        
         try {
-            const res = await axios.post(`${baseUrl}/api/v1/update-profile`, form, config);
-            console.log(res); 
-
-            setSuccess("Update Success!");
-
+            await updateProfile(updatedForm);
             setTimeout(() => {
                 navigate("/profilepage");
             }, 3000);
-            
-        } catch (error) {
-            console.error(error.response);
-                setError(error.response);
-        } finally {
-            setLoading(false);
-        }  
+        } catch (err) {
+            console.error(err);
+        }
     };
+
+    // Optional: Pre-fill the form if you want to load the user profile initially
+    useEffect(() => {
+        // Replace this with an API call to get the user profile
+        const userProfile = {
+            name: 'John Doe',
+            username: 'johndoe',
+            email: 'john@example.com',
+            phoneNumber: '1234567890',
+            bio: 'A short bio about John.',
+            website: 'https://johndoe.com',
+            profilePictureUrl: 'https://example.com/profile.jpg',
+        };
+
+        setForm(userProfile);
+    }, []);
 
     return (
         <main>
@@ -74,7 +76,7 @@ const EditProfilePage = () => {
                     <div className="flex justify-center mb-6">
                         <h1 className="text-xl font-bold text-center">Edit Profile</h1>
                     </div>
-                    {loading && (
+                    {updating && (
                         <div className="mb-4 text-center text-blue-500">
                             Updating profile, please wait...
                         </div>
@@ -86,27 +88,41 @@ const EditProfilePage = () => {
                     )}
                     {success && (
                         <div className="mb-4 text-center text-green-500">
-                            {success}
+                            Update Success!
                         </div>
                     )}
-                    <div className="flex justify-center mb-6">
-                        <div className="relative">
-                            <UploadImage />
-                            <input
-                                type="file"
-                                id="profilePictureUrl"
-                                name="profilePictureUrl"
-                                className="hidden"
-                                onChange={(e) =>
-                                    setForm({
-                                        ...form,
-                                        profilePictureUrl: URL.createObjectURL(e.target.files[0]),
-                                    })
-                                }
+
+                    {/* Profile picture upload section */}
+                    <div className="flex flex-col items-center mb-6">
+                        <label
+                            htmlFor="profilePictureUrl"
+                            className="inline-block px-4 py-2 text-white bg-blue-500 rounded-md cursor-pointer hover:bg-blue-600"
+                        >
+                            Upload Profile Picture
+                        </label>
+                        <input
+                            type="file"
+                            id="profilePictureUrl"
+                            name="profilePictureUrl"
+                            className="hidden"
+                            onChange={handleImageChange}  // Trigger image upload on file change
+                        />
+                        {imageUrl && (
+                            <img 
+                                src={imageUrl} 
+                                alt="Profile" 
+                                className="object-cover w-32 h-32 mt-4 border-2 border-gray-300 rounded-full" 
                             />
-                        </div>
+                        )}
+                        {uploadError && (
+                            <div className="mt-2 text-red-500">{uploadError}</div>
+                        )}
                     </div>
+
+                    {/* Back button */}
                     <BackButton />
+
+                    {/* Profile form */}
                     <form onSubmit={handleUpdate} className="space-y-4">
                         <div>
                             <label
@@ -213,9 +229,9 @@ const EditProfilePage = () => {
                         <button
                             type="submit"
                             className="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-                            disabled={loading}
+                            disabled={updating || uploading}  // Disable submit when updating or uploading
                         >
-                            {loading ? "Updating..." : "Submit"}
+                            {updating ? "Updating..." : "Submit"}
                         </button>
                     </form>
                 </div>
@@ -223,7 +239,6 @@ const EditProfilePage = () => {
             <Footer />
         </main>
     );
-    
 };
 
 export default EditProfilePage;

@@ -6,19 +6,23 @@ export const uploadImage = async (imageFile) => {
     const formData = new FormData();
     formData.append('image', imageFile);
 
-    const config = {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-            apiKey: apiKey,
-            Authorization: `Bearer ${jwtToken}`,
-        },
-    };
-
     try {
+        setLoading(true);
+        setError(null);
+
+        const config = {
+            headers: {
+                apiKey: `${apiKey}`,
+                Authorization: `Bearer ${jwtToken}`,
+            },
+        };
         const response = await axios.post(`${baseUrl}/api/v1/upload-image`, formData, config);
-        return response.data.imageUrl; // Mengembalikan URL gambar yang diunggah
-    } catch (error) {
-        console.error('Error uploading image:', error.response?.data || error.message);
-        throw error;
-    }
-};
+        
+        console.log("Uploaded data:", response.data); // Log to see what the response contains
+        setData(response.data);
+    } catch (err) {
+        setError(err.response ? err.response.data : err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
