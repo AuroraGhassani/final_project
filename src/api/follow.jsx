@@ -5,13 +5,15 @@ import { baseUrl, apiKey, jwtToken, userID } from './api'; // Import konfigurasi
 export const followUser = async (userId) => {
     const config =  {
         headers: {
-          Authorization: `Bearer ${jwtToken}`,
           apiKey: `c7b411cc-0e7c-4ad1-aa3f-822b00e7734b`,
+          Authorization: `Bearer ${jwtToken}`,
           'Content-Type': 'application/json',
         },
       }
+      console.log("Following user with ID sblm try catch:", userId); 
+
   try {
-    const response = await axios.post(`${baseUrl}/api/v1/follow`,{userId}, config);
+    const response = await axios.post(`${baseUrl}/api/v1/follow`,{userIdFollow: userId}, config);
     console.log('user followed successfully:', response.data);
     return response.data;
   } catch (error) {
@@ -28,10 +30,11 @@ export const unfollowUser = async (userId) => {
       Authorization: `Bearer ${jwtToken}`,
     },
   }
+  console.log("Unfollowing user with ID:", userId);
   try {
     const response = await axios.delete(
       `${baseUrl}/api/v1/unfollow/${userId}`,config);
-    console.log('User unfollowed successfully:', response.data);
+    // console.log('User unfollowed successfully:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error during unfollow:', error.response?.data || error.message);
@@ -78,7 +81,7 @@ export const getMyFollowers = async (size = 10, page = 1) => {
 };
 
 // Get Following by User ID
-export const getFollowingByUserId = async (userId, size = 10, page = 1) => {
+export const getFollowingByUserId = async (userId, size = 1000, page = 1) => {
     try {
       const response = await axios.get(
         `${baseUrl}/api/v1/following/${userId}?size=${size}&page=${page}`,
@@ -98,7 +101,7 @@ export const getFollowingByUserId = async (userId, size = 10, page = 1) => {
   };
   
   // Get Followers by User ID
-  export const getFollowersByUserId = async (userId, size = 10, page = 1) => {
+  export const getFollowersByUserId = async (userId, size = 1000, page = 1) => {
     try {
       const response = await axios.get(
         `${baseUrl}/api/v1/followers/${userId}?size=${size}&page=${page}`,

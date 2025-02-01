@@ -4,21 +4,21 @@ import usePosts from '../../hooks/usePosts';
 import { useProfileUser } from '../../hooks/useProfileUser';
 
 const PostList = () => {
-  const {profileData} = useProfileUser();
+  const { profileData } = useProfileUser();
   const id = profileData.id;
   const { posts, loading, error } = usePosts(id);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p className="text-red-500">Error: {error}</p>;
 
+  // Urutkan posts berdasarkan createdAt, terbaru ke terlama
+  const sortedPosts = [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
   return (
-    <div className="grid grid-cols-2 gap-3 mt-6 sm:gap-6">
-      {posts && posts.length > 0 ? (
-        posts.map((post) => (
-          <div
-            key={post.id}
-            className="relative overflow-hidden bg-gray-200 group aspect-square"
-          >
+    <div className="grid grid-cols-2 gap-4 mt-3 sm:gap-5 md:grid-cols-3">
+      {sortedPosts.length > 0 ? (
+        sortedPosts.map((post) => (
+          <div key={post.id} className="relative overflow-hidden bg-gray-200 group aspect-square">
             {/* Make the post image clickable */}
             <Link to={`/post/${post.id}`}>
               {/* Menampilkan gambar jika ada */}

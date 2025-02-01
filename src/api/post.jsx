@@ -14,7 +14,7 @@ export const createPost = async (imageUrl) => {
 
     try {
         const response = await axios.post(`${baseUrl}/api/v1/create-post`, imageUrl, config);
-        console.log("api create post:", response);
+        // console.log("api create post:", response);
         return response.data;
     } catch (error) {
         console.error('Error di api:', error);

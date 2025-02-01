@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = ({children}) => {
-    const token = localStorage.getItem("access_token"); //akses apakah ada token atau tdk
+    const token = localStorage.getItem("jwtToken"); //akses apakah ada token atau tdk
 
     //kondisi jika tdk ada token kembali ke halaman login
     if (!token && token === null) {

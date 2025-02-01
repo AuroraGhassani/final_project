@@ -1,6 +1,5 @@
-// hooks/useToggleLike.js
 import { useState } from 'react';
-import { likePost, unlikePost } from '../api/like'; // Import like/unlike functions
+import { likePost, unlikePost } from '../api/like'; 
 
 const useToggleLike = (post, setPost) => {
     const [isLiking, setIsLiking] = useState(false);

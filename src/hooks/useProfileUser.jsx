@@ -21,7 +21,7 @@ export const useProfileUser = () => {
         const fetchProfileData = async () => {
             
             try {
-                const userData = await getLoggedUser(); // Panggil fungsi API
+                const userData = await getLoggedUser(); 
                 setProfileData({
                     id: userData.id || '',
                     username: userData.username || 'No Username',
@@ -34,6 +34,7 @@ export const useProfileUser = () => {
                     totalFollowing: userData.totalFollowing || 0,
                     totalFollowers: userData.totalFollowers || 0,
                 });
+                
             } catch (err) {
                 console.error('Error fetching user profile:', err);
                 setError('Failed to fetch user profile.');

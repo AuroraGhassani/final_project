@@ -1,13 +1,10 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}", // Pastikan path file proyekmu benar
   ],
   theme: {
     extend: {},
   },
-  plugins: [],
-}
-
-
+  plugins: [require("daisyui")], // Tambahkan plugin DaisyUI
+};

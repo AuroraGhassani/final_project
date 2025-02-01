@@ -22,35 +22,20 @@ function App () {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<RegisterPage />} />
-            <Route path="/homepage" element={<HomePage />} />
-            <Route path="/profilepage" element={<ProfilePage />} />
+            <Route path="/homepage" element={
+                <ProtectedRoute>
+                    <HomePage />
+                </ProtectedRoute>
+            }/>
+            <Route path="/profilepage" element={<ProfilePage />}/>
+            <Route path="/explore" element={<ExplorePage />}/>
+            <Route path="/profilepage/:id" element={<OtherProfilePage />}/>
             <Route path="/editprofile" element={<EditProfilePage />} />
             <Route path="/createpost" element={<CreatePostPage />} />
             <Route path="/post/:id" element={<DetailPostPage />} />
             <Route path="/editPost/:id" element={<EditPostPage />} />
             <Route path="/createstory" element={<CreateStoryPage />} />
             <Route path="/story/:id" element={<DetailStoryPage />} />
-            <Route path="/profilepage/:id" element={<OtherProfilePage />} />
-            <Route path="/explore" element={<ExplorePage />} />
-
-            {/* 
-            
-            register
-            homepage
-            profilepage
-            editprofile
-            post
-            editpost
-            story
-             */}
-
-            {/* diprotect */}
-            {/* <Route path="/detail/:id" element={
-            <ProtectedRoute>
-                <HomePage />
-            </ProtectedRoute>
-            }/> */}
-          
         </Routes>
        </BrowserRouter>
     )

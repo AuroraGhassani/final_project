@@ -31,11 +31,13 @@ export const deleteStory = async (storyId) => {
     try {
         const response = await axios.delete(`${baseUrl}/api/v1/delete-story/${storyId}`, config);
         return response.data.data;
+        // console.log("delete story in api:", response.data);
     } catch (error) {
         console.error('Error deleting story:', error.response?.data || error.message);
         throw error;
     }
 };
+
 
 // Get Story By ID
 export const getStoryById = async (storyId) => {
@@ -66,6 +68,8 @@ export const getStoryViewsById = async (storyId) => {
 
     try {
         const response = await axios.get(`${baseUrl}/api/v1/story-views/${storyId}`, config);
+        // console.log("api get story views:", response.data.data);
+        // console.log("ni storyId", storyId)
         return response.data.data;
     } catch (error) {
         console.error('Error fetching story views:', error.response?.data || error.message);
@@ -78,7 +82,8 @@ export const getMyFollowingStories = async (page = 1, size = 10) => {
 
     try {
        const response = await apiClient.get(`/api/v1/following-story?page=${page}&size=${size}`);
-        // console.log("result in api:", response.data);
+      
+        // console.log("following stories in API:", response.data);
         return response.data;
     } catch (error) {
         console.error('Error fetching api followingStories:', error.response?.data || error.message);

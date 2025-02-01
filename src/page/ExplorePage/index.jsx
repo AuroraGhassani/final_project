@@ -3,15 +3,14 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import useExplorePost from "../../hooks/useExplorePost";
 import { useNavigate } from "react-router-dom";
-import NoImage from "../../components/Common/NoImage";
 
 const ExplorePage = () => {
-  const [currentPage, setCurrentPage] = useState(1); // State untuk halaman
-  const [allPosts, setAllPosts] = useState([]); // State untuk menyimpan semua post
-  const [isFetching, setIsFetching] = useState(false); // State untuk loading infinite scroll
-  
-  const { data, loading, error } = useExplorePost(currentPage, 10); // Fetch data dengan page & size
-  const navigate = useNavigate(); // Untuk navigasi ke halaman lain
+  const [currentPage, setCurrentPage] = useState(1);
+  const [allPosts, setAllPosts] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
+
+  const { data, loading, error } = useExplorePost(currentPage, 10);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (data?.posts) {
@@ -19,7 +18,6 @@ const ExplorePage = () => {
     }
   }, [data]);
 
-  // Infinite scroll: deteksi scroll ke bawah
   useEffect(() => {
     const handleScroll = () => {
       if (
@@ -28,7 +26,7 @@ const ExplorePage = () => {
         currentPage < data?.totalPages
       ) {
         setIsFetching(true);
-        setCurrentPage((prev) => prev + 1); // Increment halaman
+        setCurrentPage((prev) => prev + 1);
       }
     };
 
@@ -38,63 +36,61 @@ const ExplorePage = () => {
 
   useEffect(() => {
     if (isFetching && !loading) {
-      setIsFetching(false);}
+      setIsFetching(false);
+    }
   }, [loading]);
 
   const handlePostClick = (id) => {
-    navigate(`/post/${id}`); // Navigasi ke halaman post detail dengan ID
+    navigate(`/post/${id}`);
   };
 
   if (loading && currentPage === 1) {
-    return <p>Loading...</p>; // Tampilkan loading awal hanya saat halaman pertama
+    return <p className="text-lg text-center text-white">Loading...</p>;
   }
 
   if (error) {
-    return <p className="text-red-500">Error: {error}</p>;
+    return <p className="text-lg text-center text-red-500">Error: {error}</p>;
   }
 
   return (
-    <main>
+    <main className="min-h-screen text-white bg-gray-900">
       <Navbar />
-      <div className="py-24">
+      <div className="max-w-4xl px-5 py-20 mx-auto">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold">Explore</h1>
-          <p className="text-gray-600">
-            Jelajahi post terbaru dari komunitas kami!
+          <h1 className="text-4xl font-extrabold text-green-500">Explore</h1>
+          <p className="mt-2 text-lg text-gray-300">
+            Discover the latest posts from our amazing community!
           </p>
         </div>
-        
-        {/* Grid Layout */}
-        <div className="grid grid-cols-2 gap-4 px-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4">
+
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4">
           {allPosts.length > 0 ? (
-            allPosts.map((item,index) => (
+            allPosts.map((item, index) => (
               <div
-              key={`${item.id}-${index}`}
+                key={`${item.id}-${index}`}
                 onClick={() => handlePostClick(item.id)}
-                className="relative overflow-hidden bg-gray-200 cursor-pointer group"
+                className="relative overflow-hidden transition-all duration-300 bg-gray-800 border border-gray-700 shadow-lg cursor-pointer group hover:shadow-xl"
               >
-                {/* images */}
-                <div className="flex items-center justify-center w-full h-56 bg-gray-100">
-                {item.imageUrl ? (
-                    <img
-                        className="object-cover w-full h-full"
-                        src={item.imageUrl}
-                        alt={item.caption}
-                    />
-                    ) : (
-                        <NoImage /> 
-                    )}
+                <div className="flex items-center justify-center w-full h-56 bg-gray-700">
+                  <img
+                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
+                    src={item.imageUrl}
+                    alt={item.caption}
+                    onError={(e) => (e.target.src = "/fallback-image.png")}
+                  />
                 </div>
               </div>
             ))
           ) : (
-            <p className="text-center col-span-full">
-              Tidak ada post untuk ditampilkan.
+            <p className="text-lg text-center text-gray-500 col-span-full">
+              No Posts Available.
             </p>
           )}
         </div>
-        {/* Infinite Scroll Loading */}
-        {isFetching && <p className="mt-4 text-center">Loading more posts...</p>}
+
+        {isFetching && (
+          <p className="mt-8 text-center text-green-400">Loading more posts...</p>
+        )}
       </div>
       <Footer />
     </main>

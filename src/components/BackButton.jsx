@@ -8,7 +8,7 @@ const BackButton = ({ className = ""}) => {
     return (
         <button
             onClick={() => navigate(-1)}
-            className={`flex items-center text-xl font-medium text-gray-600 rounded-lg hover:bg-gray-200 focus:ring-2 focus:ring-gray-300 focus:outline-none ${className}`}
+            className={`flex items-center text-3xl font-medium text-gray-600 rounded-lg hover:bg-gray-200 focus:ring-2 focus:ring-gray-300 focus:outline-none ${className}`}
         >
             <VscChevronLeft className="mr-2 text-gray-500" />
         </button>

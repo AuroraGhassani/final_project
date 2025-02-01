@@ -17,7 +17,8 @@ export const useRegisterUser = () => {
   const [error, setError] = useState(null); // Perbaiki state error agar berbentuk objek
   const [success, setSuccess] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-
+  const [isPasswordRepeatVisible, setIsPasswordRepeatVisible] = useState(false);
+  
   const navigate = useNavigate();
 
   // Mengatur perubahan form input
@@ -60,7 +61,7 @@ export const useRegisterUser = () => {
       const response = await registerUser(form);
       console.log(response); // Debugging: lihat hasil respons
 
-      setSuccess("Registration successful! Redirecting to login...");
+      setSuccess("Registration successful!");
 
       // Redirect setelah sukses
       setTimeout(() => {
@@ -81,6 +82,8 @@ export const useRegisterUser = () => {
     error,
     isPasswordVisible,
     setIsPasswordVisible,
+    isPasswordRepeatVisible,
+    setIsPasswordRepeatVisible,
     handleChange,
     handleRegister,
   };
