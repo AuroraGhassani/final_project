@@ -128,7 +128,7 @@ const DetailPostPage = () => {
                 <div className="flex items-center">
                     <img
                         className="object-cover w-10 h-10 border-2 rounded-full border-emerald-500"
-                        src={post.user.profilePictureUrl}
+                        src={post.user.profilePictureUrl || "/fallback-avatar.png"}
                         alt={post.user.username}
                         onError={(e) => (e.target.src = "/fallback-avatar.png")}    
                     />
@@ -142,16 +142,12 @@ const DetailPostPage = () => {
 
             {/* images */}
             <div className="flex items-center justify-center w-full bg-gray-100 border border-gray-800 h-96">
-                {post.imageUrl ? (
-                    <img
-                        className="object-cover w-full h-96"
-                        src={post.imageUrl}
-                        alt={post.caption}
-                        onError={(e) => (e.target.src = "/fallback-image.png")}
-                    />
-                ) : (
-                    <NoImage /> 
-                )}
+                <img
+                    className="object-cover w-full h-96"
+                    src={post.imageUrl}
+                    alt={post.caption}
+                    onError={(e) => (e.target.src = "/fallback-image.png")}
+                /> 
             </div>
 
             <div className="p-4">

@@ -53,7 +53,7 @@ const ExplorePage = () => {
   }
 
   return (
-    <main className="min-h-screen text-white bg-gray-900">
+    <main className="min-h-screen text-white bg-gray-800">
       <Navbar />
       <div className="max-w-4xl px-5 py-20 mx-auto">
         <div className="mb-8 text-center">

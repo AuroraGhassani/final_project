@@ -15,25 +15,19 @@ const PostList = () => {
   const sortedPosts = [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   return (
-    <div className="grid grid-cols-2 gap-4 mt-3 sm:gap-5 md:grid-cols-3">
+    <div className="grid grid-cols-2 gap-4 mt-3 sm:gap-5 md:grid-cols-3 drop-shadow-lg">
       {sortedPosts.length > 0 ? (
         sortedPosts.map((post) => (
           <div key={post.id} className="relative overflow-hidden bg-gray-200 group aspect-square">
             {/* Make the post image clickable */}
             <Link to={`/post/${post.id}`}>
               {/* Menampilkan gambar jika ada */}
-              {post.imageUrl ? (
                 <img
                   src={post.imageUrl}
                   alt={post.caption || "Post image"}
                   className="object-cover w-full h-full"
                   onError={(e) => (e.target.src = "/fallback-image.png")}
                 />
-              ) : (
-                <div className="flex items-center justify-center w-full h-full text-gray-500 bg-gray-100">
-                  No Image
-                </div>
-              )}
             </Link>          
           </div>
         ))

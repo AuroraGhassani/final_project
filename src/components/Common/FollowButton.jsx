@@ -34,8 +34,8 @@ import { followUser, unfollowUser } from '../../api/follow';
         loading
           ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
           : isFollowing
-          ? 'bg-gray-300 text-gray-800 hover:bg-gray-400'
-          : 'bg-green-500 text-white hover:bg-green-600'
+          ? 'bg-gray-400 text-gray-800 hover:bg-gray-500'
+          : 'bg-emerald-500 text-white hover:bg-emerald-600'
       }`}
     >
       {loading ? 'Processing...' : isFollowing ? 'Unfollow' : 'Follow'}

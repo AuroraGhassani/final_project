@@ -13,7 +13,8 @@ const UserPostList = () => {
   const sortedPosts = [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   return (
-    <div className="grid grid-cols-2 gap-5 mx-3 mt-8 mb-40 sm:gap-5 md:grid-cols-3">
+    <div className="grid grid-cols-2 gap-5 mx-3 mt-8 mb-40 sm:gap-5 md:grid-cols-3 drop-shadow-lg">
+      
       {sortedPosts.length > 0 ? (
         sortedPosts.map((post) => (
           <div key={post.id} className="relative overflow-hidden bg-gray-200 group aspect-square">

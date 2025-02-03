@@ -3,6 +3,7 @@ import { baseUrl, apiKey, jwtToken } from './api';
 
 // Create Comment
 export const createComment = async (postId, commentText) => {
+    let jwtToken = localStorage.getItem("jwtToken");
     try {
         const response = await axios.post(
             `${baseUrl}/api/v1/create-comment`,
@@ -26,6 +27,7 @@ export const createComment = async (postId, commentText) => {
 
 // Delete Comment
 export const deleteComment = async (commentId) => {
+    let jwtToken = localStorage.getItem("jwtToken");
     try {
         const response = await axios.delete(
             `${baseUrl}/api/v1/delete-comment/${commentId}`,

@@ -39,7 +39,7 @@ const CreateStoryPage = () => {
   };
 
   return (
-    <main className="min-h-screen text-white bg-gray-900">
+    <main className="min-h-screen text-white bg-gray-800">
       <Navbar />
       <div className="flex items-center justify-center min-h-screen px-5 py-12">
         <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg bg-opacity-80 md:mx-15">

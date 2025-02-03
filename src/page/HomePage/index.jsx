@@ -8,7 +8,7 @@ import UserStoryList from "../../components/UserStoryList";
 
 const HomePage = () => {
   const { allPosts, loading, error, setAllPosts } = usePostManagement();
-
+  
   const handleToggleLike = async (postId) => {
     try {
       const updatedPosts = allPosts.map((post) => {
@@ -30,19 +30,27 @@ const HomePage = () => {
   if (loading && allPosts.length === 0) return <p className="text-center text-white">Loading...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
-// console.log(allPosts);
+  console.log("ini allpost", allPosts)
 
   return (
-    <main className="min-h-screen text-white bg-gray ">
+    <main className="min-h-screen bg-gray-800">
       <Navbar />
       <div className="max-w-5xl pt-20 mx-auto md:px-10">
         
         {/* story */}
-        <div className="flex mb-4 bg-gray-200 border rounded-lg sm:mx-20">
+        <div className="flex flex-row gap-5 mb-4 overflow-hidden bg-gray-200 md:mx-20 md:rounded-lg md:gap-1">
           <UserStoryList />
           <StoryList />
         </div>
 
+        {/* Jika allPosts kosong setelah loading selesai */}
+        {!loading && allPosts.length === 0 && (
+          <p className="mt-10 text-center text-gray-300 ">You haven't followed anyone. <br/> Find your friends in <span/>
+          <Link to="/explore" className="text-emerald-500 hover:underline">Explore</Link>
+          </p>  
+        )}
+
+        {/* mapping post */}
         {allPosts.map((post, index) => (
           <div
             key={`${post.id || post.username}-${index}`}

@@ -12,8 +12,10 @@ const useMyFollowingPost = (size = 10, page = 1) => {
       setError(null);
       try {
         const data = await getMyFollowingPosts(page, size); // Panggil fungsi API
+        console.log("data di hook useMyFollowingPost", data)
         setPosts(data || []);
       } catch (err) {
+        console.log("errordaddd", err)
         setError(err.message);
       } finally {
         setLoading(false);

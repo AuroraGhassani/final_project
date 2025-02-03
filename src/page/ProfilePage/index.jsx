@@ -46,9 +46,9 @@ const ProfilePage = () => {
 
   console.log("isi profile data", profileData); //data salah malah org lain coba check
   return (
-    <main className="min-h-screen text-white bg-gray-900">
+    <main className="min-h-screen text-white bg-gray-800">
       <Navbar />
-      <div className="max-w-4xl px-2 pt-20 pb-24 mx-auto bg-gray-800 md:px-6">
+      <div className="max-w-4xl px-2 pt-20 pb-24 mx-auto bg-gray-300 md:px-6">
         {/* Profile Section */}
         <div className="flex flex-col items-center justify-center p-6 ">
           {/* Profile Image */}
@@ -56,16 +56,16 @@ const ProfilePage = () => {
             <img
               src={profileData.profilePictureUrl || 'default-avatar.png'}
               alt="Profile"
-              className="object-cover w-24 h-24 border-4 border-green-500 rounded-full shadow-md sm:w-32 sm:h-32 md:w-28 md:h-28 lg:w-32 lg:h-32"
+              className="object-cover w-24 h-24 border-4 rounded-full shadow-md border-emerald-500 sm:w-32 sm:h-32 md:w-28 md:h-28 lg:w-32 lg:h-32"
               onError={(e) => (e.target.src = "/fallback-avatar.png")}
             />
           </div>
 
           {/* Profile Details */}
           <div className="flex flex-col mt-2 text-center">
-            <p className="text-2xl font-semibold text-white">{profileData.name || 'No Name'}</p>
-            <p className="text-sm text-white">@{profileData.username || 'No Username'}</p>
-            <p className="mt-2 text-xs text-white">{profileData.bio || 'No Bio'}</p>
+            <p className="text-2xl font-semibold text-black">{profileData.name || 'No Name'}</p>
+            <p className="text-sm text-black">@{profileData.username || 'No Username'}</p>
+            <p className="mt-2 text-xs text-black">{profileData.bio || 'No Bio'}</p>
 
             {profileData.website && profileData.website !== 'No Website' && (
               <a
@@ -82,22 +82,22 @@ const ProfilePage = () => {
             <div className="flex justify-center mt-4 space-x-8 sm:justify-start">
               <div className="text-center">
                 <p className="text-lg font-bold text-green-500">{postCount || 0}</p>
-                <p className="text-sm text-white">Posts</p>
+                <p className="text-sm text-black">Posts</p>
               </div>
               <div className="text-center cursor-pointer" onClick={() => handleShowPopup('followers')}>
                 <p className="text-lg font-bold text-green-500">{followers.length || 0}</p>
-                <p className="text-sm text-white">Followers</p>
+                <p className="text-sm text-black">Followers</p>
               </div>
               <div className="text-center cursor-pointer" onClick={() => handleShowPopup('following')}>
                 <p className="text-lg font-bold text-green-500">{following.length || 0}</p>
-                <p className="text-sm text-white">Following</p>
+                <p className="text-sm text-black">Following</p>
               </div>
             </div>
 
             {/* Edit Profile Button */}
             <Link
               to="/editprofile"
-              className="px-4 py-2 mt-4 text-sm font-semibold text-white bg-green-600 rounded-md shadow-md hover:bg-green-700"
+              className="px-4 py-2 mt-4 text-sm font-semibold text-white rounded-md shadow-md bg-emerald-500 hover:bg-emerals-600"
             >
               Edit Profile
             </Link>

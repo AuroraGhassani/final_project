@@ -39,9 +39,9 @@ export const useLoginUser = () => {
         }
     
         try {
-            // Call the login API
             const response = await loginUser(form);
-            localStorage.setItem("jwtToken", response);
+            localStorage.setItem("jwtToken", response.token);
+            localStorage.setItem("userId", response.user.id);
     
             setSuccess("Login Successful!");
             setTimeout(() => {
@@ -49,12 +49,11 @@ export const useLoginUser = () => {
             }, 3000);
     
         } catch (err) {
-            // Extract the error message from the response
-            const errorMessage = err.response?.data?.message || "Login failed, please try again!";
-            setError(errorMessage); // Set the error message correctly
-            console.error("Login failed:", errorMessage); // Debugging: check the error
+            const errorMessage = err.response?.data?.message || "Login failed!";
+            setError(errorMessage); 
+            console.error("Login failed:", errorMessage); 
         } finally {
-            setLoading(false); // Ensure loading is finished
+            setLoading(false); 
         }
     };
     

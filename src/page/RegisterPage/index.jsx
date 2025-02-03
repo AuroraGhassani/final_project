@@ -17,13 +17,10 @@ const RegisterPage = () => {
 
     return (
         <main className="flex items-center justify-center min-h-screen bg-center bg-cover bg-gray">
-            <div>
-                <img src={image1} alt="RegisterPage" className="hidden w-screen h-screen md:block"/>
-            </div>
             <div className="w-full max-w-md p-8 mx-10 bg-white rounded-lg shadow-lg bg-opacity-80 md:mx-15">
-                <h1 className="mb-6 text-3xl font-extrabold text-center text-emerald-500">Sign Up</h1>       
                 <BackButton />
-
+                <h1 className="mb-6 text-3xl font-extrabold text-center text-emerald-500">Sign Up</h1>       
+                
                 {/* Success Message */}
                 <div className="flex justify-center py-2">
                     {success && (<p className="px-2 text-xs text-green-400 bg-green-600 rounded-md w-fit">{success}</p>)}

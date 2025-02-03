@@ -69,20 +69,21 @@ const UserStoryList = () => {
 
   console.log("isi storyviews", storyViews);
   return (
-    <div className="max-w-md p-3">
+    <div className="max-w-md">
       {userStories.length === 0 ? (
-        <p className="w-16 pt-8 text-center text-gray-500 bg-gray-300">You haven't posted a story.</p>
+        <p className="px-3 py-10 my-4 ml-3 text-sm text-center text-gray-500 bg-gray-300 rounded-lg">You haven't <br/> posted a story.</p>
       ) : (
-        <main>
+        
+        <main> 
           {/* icon story */}
-          <div className="relative w-24 cursor-pointer h-36 rounded-xl" onClick={openModal}>
+          <div className="flex flex-col w-full h-full m-3 " onClick={openModal}>
             <img
-              src={userStories[0]?.user.profilePictureUrl}
-              alt="Thumbnail"
-              className="object-cover h-40 border-2 border-green-500 rounded-xl w-28"
-              onError={(e) => (e.target.src = "/fallback-image.png")}
+              src={userStories[0]?.user.profilePictureUrl || "/fallback-avatar.png"}
+              alt="Thumbnail" 
+              className="object-cover w-20 h-32 border-2 border-green-500 rounded-xl"
+              onError={(e) => (e.target.src = "/fallback-avatar.png")}
             />
-            <p className="mt-1 text-sm text-black">Your Story</p>
+            <p className="pt-1 mr-2 text-sm text-black">Your Story</p>
           </div>
 
         {/* isi popup story */}

@@ -3,6 +3,7 @@ import { baseUrl, jwtToken, apiKey } from './api';
 
 // Get Logged User Data
 export const getLoggedUser = async () => {
+    let jwtToken = localStorage.getItem("jwtToken");
     const config = {
         headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -22,6 +23,7 @@ export const getLoggedUser = async () => {
 
 // Update Profile
 export const updateProfile = async (profileData) => {
+    let jwtToken = localStorage.getItem("jwtToken");
     const config = {
         headers: {
             apiKey: `${apiKey}`,
@@ -35,15 +37,16 @@ export const updateProfile = async (profileData) => {
             profileData,
             config
         );
-        return response.data.data; // Mengembalikan data hasil response
+        return response.data.data; 
     } catch (error) {
         console.error('Error updating profile:', error.response?.data || error.message);
-        throw error; // Melempar error agar bisa ditangkap di tempat lain
+        throw error; 
     }
 };
 
 // Get User By ID
 export const getUserById = async (id) => {
+    let jwtToken = localStorage.getItem("jwtToken");
     const config = {
         headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -53,10 +56,10 @@ export const getUserById = async (id) => {
 
     try {
         const response = await axios.get(`${baseUrl}/api/v1/user/${id}`, config);
-        return response.data; // Return the user data
+        return response.data; 
         // console.log("di api getuserbyid:", response.data);
     } catch (error) {
         console.error('Error fetching user by ID:', error.response?.data || error.message);
-        throw error; // Throw error to be handled elsewhere
+        throw error; 
     }
 };

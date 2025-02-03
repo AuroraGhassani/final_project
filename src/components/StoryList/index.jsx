@@ -3,44 +3,34 @@ import { getMyFollowingStories } from "../../api/story";
 import ConfirmModal from "../Common/ConfirmModal";
 
 const StoryList = () => {
-  const [storiesGrouped, setStoriesGrouped] = useState({});
+  const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedStory, setSelectedStory] = useState(null);
 
   useEffect(() => {
     const fetchStories = async () => {
       try {
         const response = await getMyFollowingStories();
-        const grouped = response.data.stories.reduce((acc, story) => {
-          if (!acc[story.userId]) {
-            acc[story.userId] = [];
-          }
-          acc[story.userId].push(story);
-          return acc;
-        }, {});
-        setStoriesGrouped(grouped);
+        setStories(response.data.stories);
       } catch (err) {
         setError("Failed to fetch stories. Please try again later.");
       } finally {
         setLoading(false);
       }
     };
-
     fetchStories();
   }, []);
 
-  const openModal = (userId) => {
-    setSelectedUserId(userId);
+  const openModal = (story) => {
+    setSelectedStory(story);
     setIsModalOpen(true);
-    setCurrentIndex(0);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedUserId(null);
+    setSelectedStory(null);
   };
 
   if (loading) {
@@ -51,51 +41,52 @@ const StoryList = () => {
     return <div className="mt-5 text-center text-red-500">{error}</div>;
   }
 
+  console.log(stories)
+
   return (
-    <div className="max-w-md p-3">
-      {Object.keys(storiesGrouped).length === 0 ? (
-        <p className="text-center text-gray-600">No stories found.</p>
+    <div className="max-w-xs p-3 md:max-w-2xl">
+      {stories.length === 0 ? (
+        <p className="px-3 py-16 ml-3 text-sm text-center text-gray-500">No stories found.</p>
       ) : (
-        <div className="flex space-x-3 overflow-x-auto">
-          {Object.entries(storiesGrouped).map(([userId, userStories]) => (
-            <div key={userId} className="flex-shrink-0 w-24 text-center">
-              <div
-                className="relative w-24 cursor-pointer h-36 rounded-xl"
-                onClick={() => openModal(userId)}
-              >
-                <img
-                  src={userStories[0].user.profilePictureUrl}
-                  alt="Thumbnail"
-                  className="object-cover h-40 border-2 border-green-500 rounded-xl w-28"
-                  onError={(e) => (e.target.src = "/fallback-image.png")}
-                />
+        <main className="">
+          <div className="flex w-full space-x-1 overflow-x-auto">
+            {stories.map((story, index) => (
+              <div key={index} className="flex-shrink-0 w-24 text-center snap-start">
+                <div
+                  className="relative cursor-pointer rounded-xl"
+                  onClick={() => openModal(story)}
+                >
+                  <img
+                    src={story.user?.profilePictureUrl ?? "/fallback-avatar.png"}
+                    className="object-cover w-20 h-32 border-2 border-green-500 rounded-xl"
+                    onError={(e) => (e.target.src = "/fallback-avatar.png")}
+                  />
+                </div>
+                <p className="pt-1 mr-2 text-sm text-black">{story.user?.username || "Unknown"}</p>
               </div>
-              <p className="mt-5 text-sm text-black">{userStories[0].user.username}</p>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </main>
       )}
 
-      {isModalOpen && selectedUserId && (
+      {isModalOpen && selectedStory && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-80">
-          <div className="relative w-full max-w-lg ">
+          <div className="relative w-full max-w-lg">
             <button
-              className="absolute p-2 text-lg text-gray-900 rounded-lg bg-emerald-500 top-2 right-2"
+              className="absolute p-2 text-lg text-gray-900 rounded-lg top-2 right-2 bg-emerald-500"
               onClick={closeModal}
             >
               ✕
             </button>
             <div className="carousel">
-              {storiesGrouped[selectedUserId].map((story, index) => (
-                <div key={index} className="flex justify-center w-full carousel-item">
-                  <img
-                    src={story.imageUrl}
-                    alt={story.caption}
-                    className="object-cover w-full h-full"
-                    onError={(e) => (e.target.src = "/fallback-image.png")}
-                  />
-                </div>
-              ))}
+              <div className="flex justify-center w-full carousel-item">
+                <img
+                  src={selectedStory.imageUrl}
+                  alt={selectedStory.caption}
+                  className="object-cover w-full h-full"
+                  onError={(e) => (e.target.src = "/fallback-image.png")}
+                />
+              </div>
             </div>
           </div>
         </div>

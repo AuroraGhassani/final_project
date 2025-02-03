@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { baseUrl, apiKey, jwtToken, userID } from './api'; // Import konfigurasi API
+import { baseUrl, apiKey, jwtToken, userID } from './api'; 
 
 // Follow User
 export const followUser = async (userId) => {
+  let jwtToken = localStorage.getItem("jwtToken");
     const config =  {
         headers: {
           apiKey: `c7b411cc-0e7c-4ad1-aa3f-822b00e7734b`,
@@ -24,6 +25,7 @@ export const followUser = async (userId) => {
 
 // Unfollow User
 export const unfollowUser = async (userId) => {
+  let jwtToken = localStorage.getItem("jwtToken");
   const config =  {
     headers: {
       apiKey: `c7b411cc-0e7c-4ad1-aa3f-822b00e7734b`,
@@ -44,6 +46,7 @@ export const unfollowUser = async (userId) => {
 
 // Get My Following
 export const getMyFollowing = async (size = 10, page = 1) => {
+  let jwtToken = localStorage.getItem("jwtToken");
   try {
     const response = await axios.get(
       `${baseUrl}/api/v1/my-following?size=${size}&page=${page}`,
@@ -64,6 +67,7 @@ export const getMyFollowing = async (size = 10, page = 1) => {
 
 // Get My Followers
 export const getMyFollowers = async (size = 10, page = 1) => {
+  let jwtToken = localStorage.getItem("jwtToken");
   const config = {
     headers: {
       apiKey: `${apiKey}`,
@@ -82,6 +86,7 @@ export const getMyFollowers = async (size = 10, page = 1) => {
 
 // Get Following by User ID
 export const getFollowingByUserId = async (userId, size = 1000, page = 1) => {
+  let jwtToken = localStorage.getItem("jwtToken");
     try {
       const response = await axios.get(
         `${baseUrl}/api/v1/following/${userId}?size=${size}&page=${page}`,
@@ -102,6 +107,7 @@ export const getFollowingByUserId = async (userId, size = 1000, page = 1) => {
   
   // Get Followers by User ID
   export const getFollowersByUserId = async (userId, size = 1000, page = 1) => {
+    let jwtToken = localStorage.getItem("jwtToken");
     try {
       const response = await axios.get(
         `${baseUrl}/api/v1/followers/${userId}?size=${size}&page=${page}`,

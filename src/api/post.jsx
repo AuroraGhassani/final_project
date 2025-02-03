@@ -5,6 +5,7 @@ import { userID } from './api';
 
 // Create Post
 export const createPost = async (imageUrl) => {
+    let jwtToken = localStorage.getItem("jwtToken");
     const config = {
         headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -24,6 +25,7 @@ export const createPost = async (imageUrl) => {
 
 // Get Posts by User ID, isi post user tersebut
 export const getPostByUserId = async (userId) => {
+    let jwtToken = localStorage.getItem("jwtToken");
     const config = {
         headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -45,6 +47,7 @@ export const getPostByUserId = async (userId) => {
 
 // Update Post
 export const updatePost = async (postId, updatedData) => {
+    let jwtToken = localStorage.getItem("jwtToken");
     const config = {
         headers: {
             apiKey: `${apiKey}`,
@@ -65,6 +68,7 @@ export const updatePost = async (postId, updatedData) => {
 
 // Delete Post
 export const deletePost = async (postId) => {
+    let jwtToken = localStorage.getItem("jwtToken");
     const config = {
         headers: {
             apiKey: `${apiKey}`,
@@ -83,6 +87,7 @@ export const deletePost = async (postId) => {
 
 // Get Explore Posts
 export const getExplorePosts = async (page = 1, size = 10) => {
+    let jwtToken = localStorage.getItem("jwtToken");
     try {
         const response = await apiClient({
             url: `api/v1/explore-post?size=${size}&page=${page}`,
@@ -103,6 +108,7 @@ export const getExplorePosts = async (page = 1, size = 10) => {
 
 // get post by id, photo & comments
 export const getPostById = async (id) => {
+    let jwtToken = localStorage.getItem("jwtToken");
     const config = {
         headers: {
             apiKey: `${apiKey}`,
@@ -122,6 +128,8 @@ export const getPostById = async (id) => {
 
 // Get My Following Posts
 export const getMyFollowingPosts = async (page = 1, size = 10) => {
+    let jwtToken = localStorage.getItem("jwtToken");
+    console.log("jwttoken", jwtToken)
     const config = {
         headers: {
             apiKey: `${apiKey}`,
@@ -131,7 +139,7 @@ export const getMyFollowingPosts = async (page = 1, size = 10) => {
 
     try {
         const response = await axios.get(`${baseUrl}/api/v1/following-post?size=${size}&page=${page}`, config);
-        // console.log("result get my following post in api:", response.data.data.posts);
+        console.log("result get my following post in api:", response.data.data.posts);
         return response.data.data.posts; 
     } catch (error) {
         console.error('Error fetching following posts:', error.response?.data || error.message);

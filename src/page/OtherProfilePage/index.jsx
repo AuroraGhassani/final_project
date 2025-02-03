@@ -54,22 +54,23 @@ const OtherProfilePage = () => {
   if (error || followersError) return <p className="text-center text-red-500">Error loading profile or followers data.</p>;
 
   return (
-    <main className="min-h-screen text-white bg-gray-900">
+    <main className="min-h-screen text-black bg-gray-900">
       <Navbar />
       
-      <div className="max-w-4xl px-6 pt-20 pb-24 mx-auto bg-gray-800 rounded-lg shadow-lg">
+      <div className="max-w-4xl px-6 pt-20 pb-24 mx-auto bg-gray-300">
         <div className='pt-5 pl-5'><BackButton/></div>
         {/* Profile Section */}
         <div className="flex flex-col items-center justify-center pb-5">
           <img
             src={profileData?.profilePictureUrl || 'default-avatar.png'}
             alt="Profile"
-            className="object-cover w-24 h-24 border-4 border-green-500 rounded-full shadow-md sm:w-32 sm:h-32"
+            className="object-cover w-24 h-24 border-4 rounded-full shadow-md border-emerald-500 sm:w-32 sm:h-32"
+            onError={(e) => (e.target.src = '/fallback-avatar.png')}
           />
           <div className="flex flex-col mt-2 text-center">
-            <p className="text-2xl font-semibold text-white">{profileData?.name || 'No Name'}</p>
-            <p className="text-sm text-white">@{profileData?.username || 'No Username'}</p>
-            <p className="mt-2 text-xs text-white">{profileData?.bio || 'No Bio'}</p>
+            <p className="text-2xl font-semibold ">{profileData?.name || 'No Name'}</p>
+            <p className="text-sm">@{profileData?.username || 'No Username'}</p>
+            <p className="mt-2 text-xs">{profileData?.bio || 'No Bio'}</p>
             {profileData?.website && (
               <a href={profileData.website} target="_blank" rel="noopener noreferrer" className="block mt-2 text-sm text-green-500 hover:underline">
                 {profileData.website}
@@ -78,15 +79,15 @@ const OtherProfilePage = () => {
             <div className="flex justify-center mt-4 space-x-8">
               <div className="text-center">
                 <p className="text-lg font-bold text-green-500">{postCount || 0}</p>
-                <p className="text-sm text-white">Posts</p>
+                <p className="text-sm ">Posts</p>
               </div>
               <div className="text-center cursor-pointer" onClick={() => handleShowPopup('followers')}>
                 <p className="text-lg font-bold text-green-500">{followersCount}</p>
-                <p className="text-sm text-white">Followers</p>
+                <p className="text-sm ">Followers</p>
               </div>
               <div className="text-center cursor-pointer" onClick={() => handleShowPopup('following')}>
                 <p className="text-lg font-bold text-green-500">{followingCount}</p>
-                <p className="text-sm text-white">Following</p>
+                <p className="text-sm">Following</p>
               </div>
             </div>
             <FollowButton userId={id} isFollowing={isFollowing} onFollowChange={handleFollowChange} />
