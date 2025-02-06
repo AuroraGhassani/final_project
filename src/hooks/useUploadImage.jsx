@@ -11,6 +11,7 @@ const useUploadImage = () => {
     const formData = new FormData();
     formData.append("image", imageFile);
 
+    let jwtToken = localStorage.getItem("jwtToken");
     try {
         setLoading(true);
         setError(null);

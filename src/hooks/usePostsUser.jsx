@@ -10,23 +10,24 @@ const usePostsUser = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
+      let userID = localStorage.getItem("userId");
       setLoading(true);
       try {
         const response = await getPostByUserId(userID); 
-        // console.log("result in api usePostUser:", response.data.posts);
-        setPosts(response.data.posts); // Menyimpan data postingan
-        setPostCount(response.data.posts.length); // Menghitung jumlah postingan
+        // console.log("result in api usePostUser:", response.posts.length);
+        setPosts(response.posts); 
+        setPostCount(response.posts.length); 
       } catch (err) {
-        console.error("Error fetching posts:", err.message || err.response?.data);
+        console.error("Error fetching usePostsUser:", err.message || err.response?.data);
         setError(err.message || "Failed to fetch posts.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPosts(); // Memanggil fungsi untuk mengambil data postingan
+    fetchPosts(); 
 
-  }, [userID]); // Menggunakan 'id' sebagai dependency agar refetch jika 'id' berubah
+  }, [userID]); 
 
   return { posts, postCount, loading, error };
 };

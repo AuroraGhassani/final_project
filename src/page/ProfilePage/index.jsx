@@ -12,7 +12,7 @@ import useMyFollowingFollowers from '../../hooks/useMyFollowingFollowers.jsx';
 const ProfilePage = () => {
   // state user
   const { profileData, loading, error } = useProfileUser();  // data user login
-  const { postCount } = usePostsUser(userID); // data post user login
+  const { posts, postCount } = usePostsUser(userID); // data post user login
   // state popup following/followes
   const [isPopupOpen, setIsPopupOpen] = useState(false); 
   const [popupTitle, setPopupTitle] = useState('');
@@ -44,11 +44,11 @@ const ProfilePage = () => {
     return <p className="text-center text-red-500">Error: {error}</p>;
   }
 
-  console.log("isi profile data", profileData); //data salah malah org lain coba check
+  // console.log("isi profile data", profileData); //data salah malah org lain coba check
   return (
     <main className="min-h-screen text-white bg-gray-800">
       <Navbar />
-      <div className="max-w-4xl px-2 pt-20 pb-24 mx-auto bg-gray-300 md:px-6">
+      <div className="max-w-4xl min-h-screen px-2 pt-20 pb-24 mx-auto bg-gray-300 md:px-6">
         {/* Profile Section */}
         <div className="flex flex-col items-center justify-center p-6 ">
           {/* Profile Image */}

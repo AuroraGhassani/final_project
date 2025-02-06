@@ -11,12 +11,15 @@ import useMyFollowingAndFollowers from '../../hooks/useMyFollowingFollowers';
 import BackButton from '../../components/BackButton';
 
 const OtherProfilePage = () => {
-  const { profileData, loading, error } = useOtherProfileUser();
+  // profile data
+  const { profileData, loading, error } = useOtherProfileUser(); //data user
   const id = profileData?.id;
-  const { postCount } = usePosts(id);
+  const { posts, postCount } = usePosts(id); //data post user
+  // following/followers
   const { followers, following, loading: followersLoading, error: followersError } = useFollowingAndFollowers();
   const { followers: myFollowers, following: myFollowing } = useMyFollowingAndFollowers();
   const [isFollowing, setIsFollowing] = useState(false);
+  // popup
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupTitle, setPopupTitle] = useState('');
   const [popupItems, setPopupItems] = useState([]);
@@ -57,12 +60,12 @@ const OtherProfilePage = () => {
     <main className="min-h-screen text-black bg-gray-900">
       <Navbar />
       
-      <div className="max-w-4xl px-6 pt-20 pb-24 mx-auto bg-gray-300">
+      <div className="h-full max-w-4xl min-h-screen px-6 pt-20 mx-auto bg-gray-300">
         <div className='pt-5 pl-5'><BackButton/></div>
         {/* Profile Section */}
         <div className="flex flex-col items-center justify-center pb-5">
           <img
-            src={profileData?.profilePictureUrl || 'default-avatar.png'}
+            src={profileData?.profilePictureUrl || 'default-avatar.png'}a
             alt="Profile"
             className="object-cover w-24 h-24 border-4 rounded-full shadow-md border-emerald-500 sm:w-32 sm:h-32"
             onError={(e) => (e.target.src = '/fallback-avatar.png')}

@@ -16,9 +16,10 @@ const usePosts = () => {
       setLoading(true);
 
       try {
-        const response = await getPostByUserId(id); 
-        setPosts(response.data.posts);
-        setPostCount(response.data.posts.length); 
+        const response = await getPostByUserId(id);
+        // console.log("result in api usePosts:", response.posts); 
+        setPosts(response.posts);
+        setPostCount(response.posts.length); 
 
       } catch (err) {
         console.error("Error fetching posts:", err.message || err.response?.data);

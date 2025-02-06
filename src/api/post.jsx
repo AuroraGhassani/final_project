@@ -2,6 +2,7 @@ import { apiClient } from './api';
 import axios from 'axios';
 import { baseUrl, jwtToken, apiKey } from './api';
 import { userID } from './api';
+import { useRouteError } from 'react-router-dom';
 
 // Create Post
 export const createPost = async (imageUrl) => {
@@ -24,8 +25,9 @@ export const createPost = async (imageUrl) => {
 };
 
 // Get Posts by User ID, isi post user tersebut
-export const getPostByUserId = async (userId) => {
+export const getPostByUserId = async (userID) => {
     let jwtToken = localStorage.getItem("jwtToken");
+    // let userID = localStorage.getItem("userId");
     const config = {
         headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -34,10 +36,13 @@ export const getPostByUserId = async (userId) => {
     };
 
     try {
-        const response = await apiClient.get(`${baseUrl}/api/v1/users-post/${userId}?size=10&page=1`, config);
-        return response.data;
-        // console.log("Data get post by user id:", response.data);
+        const response = await axios.get(`${baseUrl}/api/v1/users-post/${userID}?size=10&page=1`, config);
+        console.log("userid", userID)
+        // console.log("Data get post by user id:", response.data.data);
+        return response.data.data;
+        
     } catch (error) {
+        console.log("check userId", userID)
         console.error("Error fetching posts:", error.response?.data || error.message);
         throw error;
     }
